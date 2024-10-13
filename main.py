@@ -1,28 +1,34 @@
 import sympy
-from sympy import solve
+from sympy import solve, symbols
 
 import math
 
 def sqrt(x):
     return math.sqrt(x)
 
-a = float(eval(input("a: ")))
-b = float(eval(input("b: ")))
-c = float(eval(input("c: ")))
+def find() -> float:
 
-dadt = input("da/dt (x if find): ")
-dbdt = input("db/dt (y if find): ")
-dcdt = input("dc/dt (z if find): ")
+    # sympy vars
 
-def find(a,b,c,dadt,dbdt,dcdt) -> int:
+    x, y, z = symbols('x y z')
+
+    # eval() so can use sqrt(), please do not hack 🙏
+    a = float(eval(input("a: ")))
+    b = float(eval(input("b: ")))
+
+    hyp = input("c (s if solve for hyp): ")
+    c = sqrt(a**2 + b**2) if hyp == 's' else float(hyp)
+
+    dadt = eval(input("da/dt (x if find): "))
+    dbdt = eval(input("db/dt (y if find): "))
+    dcdt = eval(input("dc/dt (z if find): "))
 
     if round(a**2 + b**2,2) != round(c**2,2):
         raise ArithmeticError("Not a valid traingle")
 
-    rate:int = None
-
-    print(rate:=round(solve(f"{c}*{dcdt}-{b}*{dbdt}-{a}*{dadt}")[0],2))
+    print(rate:=solve(f"{c}*{dcdt}-{b}*{dbdt}-{a}*{dadt}")[0])
 
     return rate
 
-find(a,b,c,dadt,dbdt,dcdt)
+if __name__ == '__main__':
+    find()
